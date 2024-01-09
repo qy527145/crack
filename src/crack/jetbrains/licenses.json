@@ -13,6 +13,12 @@
       "extended": false
     },
     {
+      "code": "PC",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": false
+    },
+    {
       "code": "PCWMP",
       "fallbackDate": "9999-12-31",
       "paidUpTo": "9999-12-31",

@@ -64,6 +64,11 @@ files = [
 [package.dependencies]
 pycparser = "*"
 
+[package.source]
+type = "legacy"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+reference = "tsinghua"
+
 [[package]]
 name = "crypto-plus"
 version = "0.1.5"
@@ -78,6 +83,11 @@ files = [
 [package.dependencies]
 cryptography = ">=40.0.2,<41.0.0"
 pycryptodome = ">=3.19.1,<4.0.0"
+
+[package.source]
+type = "legacy"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+reference = "tsinghua"
 
 [[package]]
 name = "cryptography"
@@ -120,6 +130,11 @@ test = ["iso8601", "pretend", "pytest (>=6.2.0)", "pytest-benchmark", "pytest-co
 test-randomorder = ["pytest-randomly"]
 tox = ["tox"]
 
+[package.source]
+type = "legacy"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+reference = "tsinghua"
+
 [[package]]
 name = "pycparser"
 version = "2.21"
@@ -130,6 +145,11 @@ files = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+reference = "tsinghua"
 
 [[package]]
 name = "pycryptodome"
@@ -172,7 +192,12 @@ files = [
     {file = "pycryptodome-3.19.1.tar.gz", hash = "sha256:8ae0dd1bcfada451c35f9e29a3e5db385caabc190f98e4a80ad02a61098fb776"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+reference = "tsinghua"
+
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12"
-content-hash = "7818a761a3e0a56d8b5df9c16f49743e739432b8438a686dc61998282334e908"
+content-hash = "651adef6eeedcc38f28471a709e39d61aff7ec1fa68e18823cd61feca5c96bf3"
