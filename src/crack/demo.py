@@ -15,9 +15,6 @@ class Algorithms:
     pass
 
 
-
-
-
 if __name__ == '__main__':
     # 1、定义模板
     template = ""

@@ -19,11 +19,12 @@ class Licenses(metaclass=ABCMeta):
     def patch(self):
         return ""
 
-    def run(self):
+    def run(self, patch=True):
         ciphertext_licenses = self.generate()
-        patch = self.patch()
+        print(f"ciphertext_licenses: \n{ciphertext_licenses}")
+        if patch:
+            patch_info = self.patch()
+            if patch_info:
+                print(f"patch: \n{patch}")
         plaintext_licenses = self.parse(ciphertext_licenses)
         print(f'plaintext_licenses: \n{plaintext_licenses}')
-        if patch:
-            print(f"patch: \n{patch}")
-        print(f"ciphertext_licenses: \n{ciphertext_licenses}")

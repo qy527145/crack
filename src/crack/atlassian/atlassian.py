@@ -32,7 +32,7 @@ ContactName=asd
 """
 
 
-def baseN(num, b, numerals="0123456789abcdefghijklmnopqrstuvwxyz"):  # noqa: N802
+def baseN(num, b, numerals="0123456789abcdefghijklmnopqrstuvwxyz"):  # noqa
     return ((num == 0) and numerals[0]) or (
             baseN(num // b, b, numerals).lstrip(numerals[0]) + numerals[num % b]
     )
