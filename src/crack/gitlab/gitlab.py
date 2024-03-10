@@ -7,7 +7,7 @@ from crypto_plus import CryptoPlus
 from crypto_plus.encrypt import decrypt_by_key
 from crypto_plus.encrypt import encrypt_by_key
 
-from crack.base import Licenses
+from crack.base import KeyGen
 
 template_license_data = {
     "version": 1,
@@ -27,7 +27,7 @@ template_license_data = {
 }
 
 
-class GitlabLicenses(Licenses):
+class GitlabKeyGen(KeyGen):
     def __init__(self):
         self.license_data = template_license_data
         try:
@@ -84,4 +84,4 @@ class GitlabLicenses(Licenses):
 
 
 if __name__ == "__main__":
-    GitlabLicenses().run()
+    GitlabKeyGen().run()

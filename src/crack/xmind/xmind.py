@@ -7,10 +7,10 @@ from asarPy import extract_asar, pack_asar
 from crypto_plus import CryptoPlus
 from crypto_plus.encrypt import encrypt_by_key, decrypt_by_key
 
-from crack.base import Licenses
+from crack.base import KeyGen
 
 
-class XmindLicenses(Licenses):
+class XmindKeyGen(KeyGen):
 
     def __init__(self):
         tmp_path = os.environ['TMP']
@@ -75,4 +75,4 @@ class XmindLicenses(Licenses):
 
 
 if __name__ == '__main__':
-    XmindLicenses().run()
+    XmindKeyGen().run()

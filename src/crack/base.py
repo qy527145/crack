@@ -2,7 +2,7 @@ from abc import ABCMeta
 from abc import abstractmethod
 
 
-class Licenses(metaclass=ABCMeta):
+class KeyGen(metaclass=ABCMeta):
 
     def gen(self):
         pass
@@ -25,6 +25,6 @@ class Licenses(metaclass=ABCMeta):
         if patch:
             patch_info = self.patch()
             if patch_info:
-                print(f"patch: \n{patch}")
+                print(f"patch: \n{patch_info}")
         plaintext_licenses = self.parse(ciphertext_licenses)
         print(f'plaintext_licenses: \n{plaintext_licenses}')
