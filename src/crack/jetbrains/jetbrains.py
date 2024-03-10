@@ -50,7 +50,7 @@ class JetbrainsKeyGen(KeyGen):
     def patch(self):
         arg = int.from_bytes(self.certificate.signature, 'big')
         result = pow(arg, 65537, self.crypto_plus.public_key.n)
-        return power_template.format(arg=arg, result=result)
+        return power_result_template.format(arg=arg, result=result)
 
 
 if __name__ == '__main__':
