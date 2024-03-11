@@ -2,13 +2,13 @@ from Crypto.Hash import keccak
 from Crypto.Hash import MD5
 
 
-def keccak384(msg):
-    hash_obj = keccak.new(data=msg, digest_bits=384)
+def md5(msg):
+    hash_obj = MD5.new(msg)
     return hash_obj.hexdigest()
 
 
-def md5(msg):
-    hash_obj = MD5.new(msg)
+def keccak384(msg):
+    hash_obj = keccak.new(data=msg, digest_bits=384)
     return hash_obj.hexdigest()
 
 
