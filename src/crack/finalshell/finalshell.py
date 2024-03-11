@@ -13,7 +13,6 @@ def keccak384(msg):
 
 
 if __name__ == '__main__':
-    # code = 'asd@1a4c215382a6d147'
     code = input('输入机器码: ')
     print('版本号 < 3.9.6 (旧版)')
     print('高级版:', md5(f'61305{code}8552'.encode())[8:24])
