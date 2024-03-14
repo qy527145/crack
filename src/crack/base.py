@@ -4,9 +4,6 @@ from abc import abstractmethod
 
 class KeyGen(metaclass=ABCMeta):
 
-    def gen(self):
-        pass
-
     @abstractmethod
     def generate(self):
         pass

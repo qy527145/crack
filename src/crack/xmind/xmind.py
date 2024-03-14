@@ -22,6 +22,7 @@ class XmindKeyGen(KeyGen):
         self.renderer_dir = self.crack_asar_dir.joinpath("renderer")
         self.private_key = None
         self.public_key = None
+        self.license_data = b''
 
         with open("crack/hook/old.pem", 'rb') as f:
             self.old_key = f"String.fromCharCode({','.join([str(i) for i in f.read()])})".encode()
@@ -33,13 +34,10 @@ class XmindKeyGen(KeyGen):
             rsa = CryptoPlus.generate_rsa(2048)
             rsa.dump("crack/hook/key.pem", "crack/hook/new.pem")
         license_info = '{"status": "sub", "expireTime": 4093057076000, "ss": "", "deviceId": "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"}'
-        license_data = b64encode(encrypt_by_key(rsa.private_key, license_info.encode()))
-        # license_data = "TiT1ul64lE+EMrH0ogOPWHZw5r3sE+jU1l2smjmRuvxmqN3v0NPklgJI9ZpGBt3MZ/mRXM+KmmlZy/bXopy74SH7VLeg3Y1aCATUoWsY2O0XXy1I0JtvLsIF+uM6G2oOx8F6f5Wz+Embhg6b9SIF19MBckmXOOfahd0zWJDaxzpAYthagLgakhbG8k7ynXrUmGIaVmxcktxg3hnRgxlwKvJfM56x5lxF+eLY/t4EFBKfk++omYQExwflUwTrwdeP4kbQvNTMGi9v5Nmyg8Nq7w47sfc1zfeg5opDhW47JTzu29EveGXXAxgV88pjQDZMWjL5c+v4PprDSzF+KJGSfA=="
-        with open(r"crack\hook\license.bin", "wb") as f:
-            f.write(license_data)
+        self.license_data = b64encode(encrypt_by_key(rsa.private_key, license_info.encode()))
         self.public_key = rsa.public_key
         self.private_key = rsa.private_key
-        return license_data
+        return self.license_data
 
     def parse(self, licenses):
         return decrypt_by_key(self.public_key, b64decode(licenses))
@@ -64,14 +62,19 @@ class XmindKeyGen(KeyGen):
                     byte_str.replace(self.old_key, new_key)
                     with open(js_file, 'wb') as _f:
                         _f.write(byte_str.replace(self.old_key, new_key))
-                    # print(js_file)
+                    print(js_file)
                     break
+        with open(self.main_dir.joinpath('hook.js'), 'rb') as f:
+            lines = f.readlines()
+            lines[5] = f"const license = '{self.license_data.decode()}'".encode()
+        with open(self.main_dir.joinpath('hook.js'), 'wb') as f:
+            f.writelines(lines)
         # 封包
         if self.asar_file_bak.is_file():
             os.remove(self.asar_file_bak)
         os.renames(self.asar_file, self.asar_file_bak)
         pack_asar(self.crack_asar_dir, self.asar_file)
-        shutil.rmtree(self.crack_asar_dir)
+        # shutil.rmtree(self.crack_asar_dir)
 
 
 if __name__ == '__main__':

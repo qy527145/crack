@@ -1,9 +1,9 @@
 const http = require("http");
 const url = require("url");
-const fs = require("fs");
 
 const hostname = "127.0.0.1";
 const port = 3000;
+const license = ''
 
 const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
@@ -84,9 +84,7 @@ const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.end(
             JSON.stringify({
-                // raw_data:
-                //   "TiT1ul64lE+EMrH0ogOPWHZw5r3sE+jU1l2smjmRuvxmqN3v0NPklgJI9ZpGBt3MZ/mRXM+KmmlZy/bXopy74SH7VLeg3Y1aCATUoWsY2O0XXy1I0JtvLsIF+uM6G2oOx8F6f5Wz+Embhg6b9SIF19MBckmXOOfahd0zWJDaxzpAYthagLgakhbG8k7ynXrUmGIaVmxcktxg3hnRgxlwKvJfM56x5lxF+eLY/t4EFBKfk++omYQExwflUwTrwdeP4kbQvNTMGi9v5Nmyg8Nq7w47sfc1zfeg5opDhW47JTzu29EveGXXAxgV88pjQDZMWjL5c+v4PprDSzF+KJGSfA==",
-                raw_data: fs.readFileSync('./hook/license.bin', encoding = 'utf8'),
+                raw_data: license,
                 license: {
                     status: "sub",
                     expireTime: 4093057076000,
