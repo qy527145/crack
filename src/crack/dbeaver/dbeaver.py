@@ -38,7 +38,7 @@ class License:
         self.license_end_time = LicenseItem(0, 8)
         self.flags = LicenseItem(1024, 8)
         self.product_id = LicenseItem("dbeaver-ue", 16)
-        self.product_version = LicenseItem("23.3", 8)
+        self.product_version = LicenseItem("24.0", 8)
         self.owner_id = LicenseItem("10000", 16)
         self.owner_company = LicenseItem("void", 64)
         self.owner_name = LicenseItem("wmymz", 32)
