@@ -3,7 +3,6 @@ const url = require("url");
 
 const hostname = "127.0.0.1";
 const port = 3000;
-const license = ''
 
 const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
@@ -30,7 +29,7 @@ const server = http.createServer((req, res) => {
                 token: "1234567890",
                 limit: 0,
                 primary_email: "wmymz@icloud.com",
-                fullname: "xuqiao",
+                fullname: "wmymz",
                 type: null,
             })
         );
@@ -76,7 +75,7 @@ const server = http.createServer((req, res) => {
                 token: "1234567890",
                 limit: 0,
                 primary_email: "wmymz@icloud.com",
-                fullname: "xuqiao",
+                fullname: "wmymz",
                 type: null,
             })
         );
@@ -84,7 +83,7 @@ const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.end(
             JSON.stringify({
-                raw_data: license,
+                raw_data: "{{license_data}}",
                 license: {
                     status: "sub",
                     expireTime: 4093057076000,

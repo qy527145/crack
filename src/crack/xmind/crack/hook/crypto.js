@@ -1,5 +1,4 @@
 const crypto = require("crypto");
-const fs = require("fs");
 
 // 保存原始的 publicDecrypt 函数
 const originalPublicDecrypt = crypto.publicDecrypt;
@@ -9,8 +8,7 @@ const originalPublicDecrypt = crypto.publicDecrypt;
  * @returns
  */
 const originalPublicDecryptEx = function (message) {
-    // let key = `-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDYH31l0llicBavbUZRg0y1LnI\n2JJuPZak0498wGmK0N+ksqCzA0XUfCgQ5E9itYyPuT+z6Pz/+0q6NeApkWcnC/Th\nWQY6ZlEOMonrhPub8zsWYOZzckQutx3jn6k+6ZXx7yUbbkxIk+wqWgnlQxnx6TMd\nS3rgo3r4blFTWi6EEQIDAQAB\n-----END PUBLIC KEY-----`;
-    let key = fs.readFileSync('old.pem', encoding = 'utf8')
+    let key = `{{old_public_key}}`;
     const n = originalPublicDecrypt(
         {
             key: key,
@@ -28,9 +26,7 @@ Object.defineProperty(crypto, "publicDecrypt", {
             console.trace("myPublicDecrypt 调用栈");
             console.log("秋城落叶Hook Xmind开始");
 
-            // args[0]["key"] =
-            // "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqIGfghxs/schjid+mHlK\nAQhWHm1z1uPX/CWr2TBHPcg3PDmF8vViyhuxpkVe4/X4Tz9hN9BGA+h7toHUw6rK\nz2Mk5M5peG5Id4DVLADuVdpcbjo0Ypc0mOdDDTJtlc2T8q10rdGYD0ErpeR9Su9i\naJxDWMOLlNzpmWXpgKQWjRuzoIrOiiHvGzAiSrCMKt6m+/m+Svr5CQHw+/Jx1iAw\nyMZIMwux8gsgawVtU1u6MmIB9px4JncFepsg3FdSEbqdYZL3MeExDT7PPh2GQcbS\nfcl1gYTrCgJFUZUr2JBOSVIoIvGATH7VIMYBWantbAiQgGqkJstXb8UngEM4hrsX\nuQIDAQAB\n-----END PUBLIC KEY-----";
-            args[0]["key"] = fs.readFileSync('new.pem', encoding = 'utf8')
+            args[0]["key"] = "{{new_public_key}}";
             let result;
             try {
                 result = originalPublicDecrypt.call(this, ...args);

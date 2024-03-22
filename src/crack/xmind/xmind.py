@@ -1,11 +1,11 @@
 import os
 import pathlib
 import shutil
-from base64 import b64encode, b64decode
+from base64 import b64decode, b64encode
 
 from asarPy import extract_asar, pack_asar
 from crypto_plus import CryptoPlus
-from crypto_plus.encrypt import encrypt_by_key, decrypt_by_key
+from crypto_plus.encrypt import decrypt_by_key, encrypt_by_key
 
 from crack.base import KeyGen
 
@@ -22,21 +22,18 @@ class XmindKeyGen(KeyGen):
         self.renderer_dir = self.crack_asar_dir.joinpath("renderer")
         self.private_key = None
         self.public_key = None
-        self.license_data = b''
-
-        with open("crack/hook/old.pem", 'rb') as f:
-            self.old_key = f"String.fromCharCode({','.join([str(i) for i in f.read()])})".encode()
+        self.old_public_key = open('old.pem').read()
 
     def generate(self):
-        if os.path.isfile('crack/hook/key.pem'):
-            rsa = CryptoPlus.load('crack/hook/key.pem')
+        if os.path.isfile('key.pem'):
+            rsa = CryptoPlus.load('key.pem')
         else:
-            rsa = CryptoPlus.generate_rsa(2048)
-            rsa.dump("crack/hook/key.pem", "crack/hook/new.pem")
+            rsa = CryptoPlus.generate_rsa(1024)
+            rsa.dump("key.pem", "new_public_key.pem")
         license_info = '{"status": "sub", "expireTime": 4093057076000, "ss": "", "deviceId": "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"}'
-        self.license_data = b64encode(encrypt_by_key(rsa.private_key, license_info.encode()))
         self.public_key = rsa.public_key
         self.private_key = rsa.private_key
+        self.license_data = b64encode(encrypt_by_key(rsa.private_key, license_info.encode()))
         return self.license_data
 
     def parse(self, licenses):
@@ -53,28 +50,34 @@ class XmindKeyGen(KeyGen):
         with open(self.main_dir.joinpath('main.js'), 'wb') as f:
             f.writelines(lines)
         # 替换密钥
+        old_key = f"String.fromCharCode({','.join([str(i) for i in self.old_public_key.encode()])})".encode()
         new_key = f"String.fromCharCode({','.join([str(i) for i in self.public_key.export_key()])})".encode()
         for js_file in self.renderer_dir.rglob("*.js"):
             with open(js_file, 'rb') as f:
                 byte_str = f.read()
-                index = byte_str.find(self.old_key)
+                index = byte_str.find(old_key)
                 if index != -1:
-                    byte_str.replace(self.old_key, new_key)
+                    byte_str.replace(old_key, new_key)
                     with open(js_file, 'wb') as _f:
-                        _f.write(byte_str.replace(self.old_key, new_key))
+                        _f.write(byte_str.replace(old_key, new_key))
                     print(js_file)
                     break
-        with open(self.main_dir.joinpath('hook.js'), 'rb') as f:
-            lines = f.readlines()
-            lines[5] = f"const license = '{self.license_data.decode()}'".encode()
-        with open(self.main_dir.joinpath('hook.js'), 'wb') as f:
-            f.writelines(lines)
+        # 占位符填充
+        with open(self.main_dir.joinpath('hook.js'), 'r', encoding='u8') as f:
+            content = f.read()
+            content = content.replace("{{license_data}}", self.license_data.decode())
+        with open(self.main_dir.joinpath('hook.js'), 'w', encoding='u8') as f:
+            f.write(content)
+        with open(self.main_dir.joinpath('hook').joinpath('crypto.js'), 'r', encoding='u8') as f:
+            content = f.read()
+            content = content.replace("{{old_public_key}}", self.old_public_key.replace("\n", "\\n"))
+            content = content.replace("{{new_public_key}}", self.public_key.export_key().decode().replace("\n", "\\n"))
+        with open(self.main_dir.joinpath('hook').joinpath('crypto.js'), 'w', encoding='u8') as f:
+            f.write(content)
         # 封包
-        if self.asar_file_bak.is_file():
-            os.remove(self.asar_file_bak)
-        os.renames(self.asar_file, self.asar_file_bak)
+        os.remove(self.asar_file)
         pack_asar(self.crack_asar_dir, self.asar_file)
-        # shutil.rmtree(self.crack_asar_dir)
+        shutil.rmtree(self.crack_asar_dir)
 
 
 if __name__ == '__main__':
