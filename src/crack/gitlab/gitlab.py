@@ -23,7 +23,7 @@ template_license_data = {
     "seat_reconciliation_enabled": False,
     "operational_metrics_enabled": False,
     "generated_from_customers_dot": False,
-    "restrictions": {"active_user_count": 99999},
+    "restrictions": {"active_user_count": 99999, "plan": "ultimate"},
 }
 
 
