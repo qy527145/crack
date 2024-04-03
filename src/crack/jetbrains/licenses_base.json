@@ -1,0 +1,99 @@
+{
+  "licenseId": "JETBRAINS",
+  "licenseeName": "crack",
+  "assigneeName": "",
+  "assigneeEmail": "",
+  "licenseRestriction": "",
+  "checkConcurrentUse": false,
+  "products": [
+    {
+      "code": "II",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "PS",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "AC",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "DB",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "RM",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "WS",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "RD",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "CL",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "PC",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "GO",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "DS",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "DC",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "DPN",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "DM",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    }
+  ],
+  "metadata": "0120230915PSAN000005",
+  "hash": "TRIAL:0",
+  "gracePeriodDays": 7,
+  "autoProlongated": false,
+  "isAutoProlongated": false
+}

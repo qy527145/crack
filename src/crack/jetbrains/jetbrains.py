@@ -2,6 +2,7 @@ import json
 from base64 import b64encode, b64decode
 
 from crypto_plus import CryptoPlus
+
 from crack.base import KeyGen
 
 # power[Result] 模板
@@ -54,4 +55,7 @@ class JetbrainsKeyGen(KeyGen):
 
 
 if __name__ == '__main__':
+    from plugins import JetBrainPlugin
+
+    JetBrainPlugin().update().make_licenses()
     JetbrainsKeyGen().run()
