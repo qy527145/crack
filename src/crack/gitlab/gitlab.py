@@ -4,8 +4,6 @@ import os
 
 from Crypto.Cipher import AES
 from crypto_plus import CryptoPlus
-from crypto_plus.encrypt import decrypt_by_key
-from crypto_plus.encrypt import encrypt_by_key
 
 from crack.base import KeyGen
 
@@ -32,7 +30,7 @@ class GitlabKeyGen(KeyGen):
         self.license_data = template_license_data
         try:
             rsa = CryptoPlus.load()
-        except Exception:
+        except Exception:  # noqa
             rsa = CryptoPlus.generate_rsa(2048)
             rsa.dump(pub_key_path=".license_encryption_key.pub")
         self.crypto_plus = rsa
@@ -47,9 +45,8 @@ class GitlabKeyGen(KeyGen):
         encrypt_data = AES.new(aes_key, AES.MODE_CBC, aes_iv).encrypt(
             license_plaintext
         )
-        # 原则上不应该使用私钥加密，CryptoPlus不直接支持私钥加密
-        # encrypt_key = self.crypto_plus.encrypt(aes_key)
-        encrypt_key = encrypt_by_key(self.crypto_plus.private_key, aes_key)
+        # 原则上不应该使用私钥加密，尽管CryptoPlus支持私钥加密
+        encrypt_key = self.crypto_plus.encrypt_by_private_key(aes_key)
         encrypt_license = {
             "data": base64.b64encode(encrypt_data).decode(),
             "key": base64.b64encode(encrypt_key).decode(),
@@ -69,9 +66,8 @@ class GitlabKeyGen(KeyGen):
         )
         encrypt_key = base64.b64decode(encrypt_license["key"].replace("\n", ""))
         iv = base64.b64decode(encrypt_license["iv"])
-        # 原则上不应该使用公钥解密，CryptoPlus不直接支持公钥解密
-        # key = self.crypto_plus.decrypt(encrypt_key)
-        key = decrypt_by_key(self.crypto_plus.public_key, encrypt_key)
+        # 原则上不应该使用公钥解密，尽管CryptoPlus支持公钥解密
+        key = self.crypto_plus.decrypt_by_public_key(encrypt_key)
         data = AES.new(key, AES.MODE_CBC, iv).decrypt(encrypt_data)
         if data[-1] != 125:
             # 不以}结尾

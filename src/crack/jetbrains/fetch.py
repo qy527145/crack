@@ -39,7 +39,7 @@ def make_licenses(products):
     json.dump(license_data, open('licenses_base.json', 'w'), indent=2)
 
 
-if __name__ == '__main__':
+def main():
     ides = []
     infos = fetch()
     for name, products in infos.items():
@@ -47,3 +47,7 @@ if __name__ == '__main__':
             if not product['extended']:
                 ides.append((name, product['code']))
     make_licenses(ides)
+
+
+if __name__ == '__main__':
+    main()

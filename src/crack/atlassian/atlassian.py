@@ -75,7 +75,7 @@ if __name__ == "__main__":
     # zip_buf = zlib.compress(b'asd', wbits=16 + zlib.MAX_WBITS)
     # source = zlib.decompress(zip_buf, 16 + zlib.MAX_WBITS)
     # print(source)
-    code = """
+    act_code = """
 AAABfg0ODAoPeJxtUVFPszAUfe+vIPEZR4uwuaQPEzDOwPgUZtS3rtxJI+tYW+aHv96OYUyMSe9D7
 23POfeci7LunBi4Q7CDp/MgmOPAiYrSIR7xUaSAGbGXMTNATx0XE5dglBxZ0w0TumWNBhSD5kq0Q
 2ctG7ETBiqnERykBmfTO7UxrZ5PJp+1aOBS7FGu3pgU+gxSaYb4Xm4vGTfiCNSoDlC0l8bek4yJh
@@ -85,6 +85,6 @@ lm5KZ56Pg5IYCu8QgWoIyg7xsS/CsIzoQVhEciTjGHtd+ifQOmTLTj0vKk38338Df03779O8Zpp+
 B3TaNg3HEFFt/nJaWAbJKy63QZUvl1r+5K6GFnt9A/9YyKDLzaQL1JnulowLAIUXNWpxJYDbAba+
 IH9vOa4CE9mebMCFEw1VlpaALNRy6rw78w3wotUn3SKX02ii
     """
-    parse(code)
+    parse(act_code)
     code2 = generate()
     parse(code2)

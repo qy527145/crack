@@ -14,7 +14,7 @@ class JetbrainsKeyGen(KeyGen):
     def __init__(self):
         try:
             obj = CryptoPlus.load()
-        except Exception:
+        except Exception:  # noqa
             obj = CryptoPlus.generate_rsa()
             obj.dump()
             obj.dump_cert(subject_name='Crack', issuer_name='JetProfile CA')

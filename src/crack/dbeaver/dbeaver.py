@@ -1,8 +1,6 @@
 import base64
-from time import time
 
 from crypto_plus import CryptoPlus
-from crypto_plus.encrypt import decrypt_by_key, encrypt_by_key
 
 from crack.base import KeyGen
 
@@ -33,8 +31,8 @@ class License:
         self.format = LicenseItem(1, 1)
         self.license_id = LicenseItem('DB-1Y1MTZFU-ZHGR', 16)
         self.license_type = LicenseItem(b'U'[0], 1)
-        self.license_issue_time = LicenseItem(int(time() * 1000), 8)
-        self.license_start_time = LicenseItem(int(time() * 1000), 8)
+        self.license_issue_time = LicenseItem(1713004787391, 8)
+        self.license_start_time = LicenseItem(1713004787391, 8)
         self.license_end_time = LicenseItem(0, 8)
         self.flags = LicenseItem(1024, 8)
         self.product_id = LicenseItem("dbeaver-ue", 16)
@@ -72,17 +70,17 @@ class DBeaverKeyGen(KeyGen):
     def __init__(self):
         try:
             obj = CryptoPlus.load()
-        except Exception:
+        except Exception:  # noqa
             obj = CryptoPlus.generate_rsa(2048)
             obj.dump()
         self.crypto_plus = obj
 
     def generate(self):
         license_info = bytes(License())
-        return base64.b64encode(encrypt_by_key(self.crypto_plus.private_key, license_info)).decode()
+        return base64.b64encode(self.crypto_plus.encrypt_by_private_key(license_info)).decode()
 
     def parse(self, licenses):
-        return decrypt_by_key(self.crypto_plus.public_key, base64.b64decode(licenses))
+        return self.crypto_plus.decrypt_by_public_key(base64.b64decode(licenses))
 
     def patch(self):
         with open("dbeaver-ue-public.key", 'r') as f:
