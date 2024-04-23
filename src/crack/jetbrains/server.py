@@ -9,11 +9,15 @@ from crypto_plus import CryptoPlus
 from fastapi import Response, FastAPI
 from starlette.responses import PlainTextResponse
 
-app = FastAPI()
+from jetbrains import JetbrainsKeyGen
+from plugins import JetBrainPlugin
 
-server_uid = 'wmymz'
+server_uid = os.environ.get('NAME', 'crack')
 subject_name = f'{server_uid}.lsrv.jetbrains.com'
 server_uid_camel = server_uid.upper()[:1] + server_uid[1:]
+
+# 首次启动更新插件信息
+JetBrainPlugin().update().make_licenses()
 
 
 def ensure_key():
@@ -52,6 +56,9 @@ class XMLResponse(Response):
     media_type = 'application/xml'
 
 
+app = FastAPI()
+
+
 @app.get('/rpc/ping.action')
 async def ping(salt, machineId):
     confirmation_stamp = f'{int(1000 * time.time())}:{machineId}'
@@ -83,6 +90,11 @@ async def release_ticket(salt="", machineId=""):
 @app.get('/')
 async def power():
     return PlainTextResponse(patch)
+
+
+@app.get('/code')
+async def code():
+    return PlainTextResponse(JetbrainsKeyGen().generate())
 
 
 if __name__ == '__main__':

@@ -1,14 +1,11 @@
 import json
 import os
-import socket
 
 import grequests
 import requests
-import socks
 
-socks.set_default_proxy(socks.SOCKS5, '127.0.0.1', 1081)
-socks.socksocket().set_proxy()
-socket.socket = socks.socksocket
+# 过期时间
+EXPIRE_DATE = os.environ.get('EXPIRE_DATE', '9999-12-31')
 
 
 def search(name=None, show_code=False):
@@ -61,7 +58,7 @@ class JetBrainPlugin:
             self.id_map[plugin_id] = {
                 'name': remote_id_map[plugin_id],
                 'code': plugin_code,
-                'plugin': True,
+                'extended': True,
             }
         self.dump()
         return self
@@ -72,10 +69,13 @@ class JetBrainPlugin:
         for product in self.id_map.values():
             products_json.append({
                 'code': product['code'],
-                'fallbackDate': '9999-12-31',
-                'paidUpTo': '9999-12-31',
-                'extended': product['plugin'],
+                'fallbackDate': EXPIRE_DATE,
+                'paidUpTo': EXPIRE_DATE,
+                'extended': product['extended'],
             })
+        for ide in license_data['products']:
+            ide['fallbackDate'] = EXPIRE_DATE
+            ide['paidUpTo'] = EXPIRE_DATE
         license_data['products'].extend(products_json)
         json.dump(license_data, open('licenses.json', 'w'), indent=2)
         return self

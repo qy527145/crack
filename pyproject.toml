@@ -14,6 +14,15 @@ pysocks = "^1.7.1"
 grequests = "^0.7.0"
 lxml = "^5.1.1"
 websockets = "^12.0"
+fastapi = "^0.110.2"
+uvicorn = "^0.29.0"
+starlette = "^0.37.2"
+pydantic = "^2.7.0"
+typing-extensions = "^4.11.0"
+pydantic-core = "^2.18.2"
+annotated-types = "^0.6.0"
+click = "^8.1.7"
+h11 = "^0.14.0"
 
 [build-system]
 requires = ["poetry-core"]
