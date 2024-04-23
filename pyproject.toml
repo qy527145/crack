@@ -12,7 +12,6 @@ asarpy = "*"
 requests = "^2.31.0"
 pysocks = "^1.7.1"
 grequests = "^0.7.0"
-beautifulsoup4 = "^4.12.3"
 lxml = "^5.1.1"
 websockets = "^12.0"
 
