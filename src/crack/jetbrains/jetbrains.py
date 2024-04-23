@@ -19,12 +19,11 @@ class JetbrainsKeyGen(KeyGen):
             obj.dump()
             obj.dump_cert(subject_name='Crack', issuer_name='JetProfile CA')
         self.crypto_plus = obj
-        self.certificate_text = open('cert.crt').read()
-        self.certificate = CryptoPlus.loads(self.certificate_text).raw_private_key
+        self.certificate_text = "".join(open('cert.crt').read().split(chr(10))[1:-2])
+        self.certificate = CryptoPlus.loads(self.certificate_text).key
         self.license_data = json.load(open('licenses.json'))
 
     def generate(self):
-        cert = "".join(self.certificate_text.split(chr(10))[1:-2])
         # 激活码组成
         license_id = self.license_data['licenseId']
         license_info = json.dumps(self.license_data, separators=(',', ':'))
@@ -33,7 +32,7 @@ class JetbrainsKeyGen(KeyGen):
             f'{license_id}-'
             f'{b64encode(license_info.encode()).decode()}'
             f'-{b64encode(signature).decode()}-'
-            f'{cert}'
+            f'{self.certificate_text}'
         )
         return activation_code
 
@@ -41,7 +40,6 @@ class JetbrainsKeyGen(KeyGen):
         license_id, license_info, signature, cert = licenses.split('-')
         license_info = b64decode(license_info)
         signature = b64decode(signature)
-        cert = f"-----BEGIN CERTIFICATE-----\n{cert}\n-----END CERTIFICATE-----\n"
         certificate = CryptoPlus.loads(cert)
         assert certificate.verify(license_info, signature, "SHA1")
         license_info = json.loads(license_info.decode())

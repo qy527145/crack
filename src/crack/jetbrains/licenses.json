@@ -1375,6 +1375,12 @@
       "extended": true
     },
     {
+      "code": "PPKXCODEGENERAT",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
       "code": "PCLAI",
       "fallbackDate": "9999-12-31",
       "paidUpTo": "9999-12-31",
@@ -1388,6 +1394,12 @@
     },
     {
       "code": "PMONGODB",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
+      "code": "PMAVENSEARCHER",
       "fallbackDate": "9999-12-31",
       "paidUpTo": "9999-12-31",
       "extended": true

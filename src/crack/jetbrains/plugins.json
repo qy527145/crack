@@ -1069,6 +1069,11 @@
     "name": "IntelliPHP - AI Autocomplete for PHP",
     "plugin": true
   },
+  "23869": {
+    "code": "PPKXCODEGENERAT",
+    "name": "PKXCodeGenerator",
+    "plugin": true
+  },
   "23887": {
     "code": "PCLAI",
     "name": "CLAi",
@@ -1082,6 +1087,11 @@
   "23999": {
     "code": "PMONGODB",
     "name": "Mongo DB",
+    "plugin": true
+  },
+  "24111": {
+    "code": "PMAVENSEARCHER",
+    "name": "MavenSearcher",
     "plugin": true
   },
   "7219": {
