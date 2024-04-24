@@ -1481,6 +1481,12 @@
       "fallbackDate": "9999-12-31",
       "paidUpTo": "9999-12-31",
       "extended": true
+    },
+    {
+      "code": "PPLUGDEVKITM",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
     }
   ],
   "metadata": "0120230915PSAN000005",

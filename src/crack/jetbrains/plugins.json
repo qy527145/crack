@@ -1089,6 +1089,11 @@
     "extended": true,
     "name": "Mongo DB"
   },
+  "24053": {
+    "code": "PPLUGDEVKITM",
+    "extended": true,
+    "name": "IDE Plug DevKit Maven"
+  },
   "24111": {
     "code": "PMAVENSEARCHER",
     "extended": true,

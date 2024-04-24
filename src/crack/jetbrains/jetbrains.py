@@ -1,8 +1,11 @@
 import json
+import pathlib
+import sys
 from base64 import b64encode, b64decode
 
 from crypto_plus import CryptoPlus
 
+sys.path.append(str(pathlib.Path(__file__).parent.parent.parent))
 from crack.base import KeyGen
 
 # power[Result] 模板
@@ -23,10 +26,15 @@ class JetbrainsKeyGen(KeyGen):
         self.certificate = CryptoPlus.loads(self.certificate_text).key
         self.license_data = json.load(open('licenses.json'))
 
-    def generate(self):
+    def generate(self, license_id=None, license_name=None):
+        license_data = self.license_data.copy()
+        if license_id:
+            license_data['licenseId'] = license_id
+        if license_name:
+            license_data['licenseeName'] = license_name
         # 激活码组成
-        license_id = self.license_data['licenseId']
-        license_info = json.dumps(self.license_data, separators=(',', ':'))
+        license_id = license_data['licenseId']
+        license_info = json.dumps(license_data, separators=(',', ':'))
         signature = self.crypto_plus.sign(license_info.encode(), "SHA1")
         activation_code = (
             f'{license_id}-'
