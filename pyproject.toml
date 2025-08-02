@@ -1,34 +1,24 @@
-[tool.poetry]
+[project]
 name = "crack"
 version = "0.1.0"
-description = ""
-authors = ["wmymz <wmymz@icloud.com>"]
+description = "Add your description here"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = ">=3.12"
-crypto-plus = "*"
-asarpy = "*"
-requests = "^2.31.0"
-pysocks = "^1.7.1"
-grequests = "^0.7.0"
-lxml = "^5.1.1"
-websockets = "^12.0"
-fastapi = "^0.110.2"
-uvicorn = "^0.29.0"
-starlette = "^0.37.2"
-pydantic = "^2.7.0"
-typing-extensions = "^4.11.0"
-pydantic-core = "^2.18.2"
-annotated-types = "^0.6.0"
-click = "^8.1.7"
-h11 = "^0.14.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[[tool.poetry.source]]
-name = "tsinghua"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
-priority = "default"
+requires-python = ">=3.12"
+dependencies = [
+    "annotated-types>=0.7.0",
+    "asarpy>=1.0.1",
+    "click>=8.2.2",
+    "crypto-plus>=1.0.6",
+    "fastapi>=0.116.1",
+    "grequests>=0.7.0",
+    "h11>=0.16.0",
+    "lxml>=6.0.0",
+    "pydantic>=2.11.7",
+    "pydantic-core>=2.33.2",
+    "pysocks>=1.7.1",
+    "requests>=2.32.4",
+    "starlette>=0.47.2",
+    "typing-extensions>=4.14.1",
+    "uvicorn>=0.35.0",
+    "websockets>=15.0.1",
+]

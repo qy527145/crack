@@ -1399,6 +1399,12 @@
       "extended": true
     },
     {
+      "code": "PPLUGDEVKITM",
+      "fallbackDate": "9999-12-31",
+      "paidUpTo": "9999-12-31",
+      "extended": true
+    },
+    {
       "code": "PMAVENSEARCHER",
       "fallbackDate": "9999-12-31",
       "paidUpTo": "9999-12-31",
@@ -1478,12 +1484,6 @@
     },
     {
       "code": "PAEM",
-      "fallbackDate": "9999-12-31",
-      "paidUpTo": "9999-12-31",
-      "extended": true
-    },
-    {
-      "code": "PPLUGDEVKITM",
       "fallbackDate": "9999-12-31",
       "paidUpTo": "9999-12-31",
       "extended": true

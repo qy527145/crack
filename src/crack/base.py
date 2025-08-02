@@ -3,7 +3,6 @@ from abc import abstractmethod
 
 
 class KeyGen(metaclass=ABCMeta):
-
     @abstractmethod
     def generate(self):
         pass
@@ -24,4 +23,4 @@ class KeyGen(metaclass=ABCMeta):
             if patch_info:
                 print(f"patch: \n{patch_info}")
         plaintext_licenses = self.parse(ciphertext_licenses)
-        print(f'plaintext_licenses: \n{plaintext_licenses}')
+        print(f"plaintext_licenses: \n{plaintext_licenses}")

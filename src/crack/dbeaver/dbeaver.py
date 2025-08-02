@@ -5,7 +5,7 @@ from crypto_plus import CryptoPlus
 from crack.base import KeyGen
 
 # power[Args] 模板
-power_args_template = 'EQUAL,65537,{old_n}->65537,{new_n}'
+power_args_template = "EQUAL,65537,{old_n}->65537,{new_n}"
 
 
 class LicenseItem:
@@ -15,7 +15,7 @@ class LicenseItem:
 
     def __bytes__(self):
         if isinstance(self.value, str):
-            return self.value.encode() + b'\x20' * (self.size - len(self.value))
+            return self.value.encode() + b"\x20" * (self.size - len(self.value))
         if isinstance(self.value, int):
             return self.value.to_bytes(self.size)
         if isinstance(self.value, bytes):
@@ -29,8 +29,8 @@ class LicenseItem:
 class License:
     def __init__(self):
         self.format = LicenseItem(1, 1)
-        self.license_id = LicenseItem('DB-1Y1MTZFU-ZHGR', 16)
-        self.license_type = LicenseItem(b'U'[0], 1)
+        self.license_id = LicenseItem("DB-1Y1MTZFU-ZHGR", 16)
+        self.license_type = LicenseItem(b"U"[0], 1)
         self.license_issue_time = LicenseItem(1713004787391, 8)
         self.license_start_time = LicenseItem(1713004787391, 8)
         self.license_end_time = LicenseItem(0, 8)
@@ -47,22 +47,22 @@ class License:
 
     def __bytes__(self):
         return bytes(
-            self.format | \
-            self.license_id | \
-            self.license_type | \
-            self.license_issue_time | \
-            self.license_start_time | \
-            self.license_end_time | \
-            self.flags | \
-            self.product_id | \
-            self.product_version | \
-            self.owner_id | \
-            self.owner_company | \
-            self.owner_name | \
-            self.owner_email | \
-            self.years_number | \
-            self.reserved1 | \
-            self.users_number
+            self.format
+            | self.license_id
+            | self.license_type
+            | self.license_issue_time
+            | self.license_start_time
+            | self.license_end_time
+            | self.flags
+            | self.product_id
+            | self.product_version
+            | self.owner_id
+            | self.owner_company
+            | self.owner_name
+            | self.owner_email
+            | self.years_number
+            | self.reserved1
+            | self.users_number
         )
 
 
@@ -77,16 +77,20 @@ class DBeaverKeyGen(KeyGen):
 
     def generate(self):
         license_info = bytes(License())
-        return base64.b64encode(self.crypto_plus.encrypt_by_private_key(license_info)).decode()
+        return base64.b64encode(
+            self.crypto_plus.encrypt_by_private_key(license_info)
+        ).decode()
 
     def parse(self, licenses):
         return self.crypto_plus.decrypt_by_public_key(base64.b64decode(licenses))
 
     def patch(self):
-        with open("dbeaver-ue-public.key", 'r') as f:
-            old_n = CryptoPlus.loads(''.join(f.readlines()[1:])).public_key.n
-        return power_args_template.format(old_n=old_n, new_n=self.crypto_plus.public_key.n)
+        with open("dbeaver-ue-public.key", "r") as f:
+            old_n = CryptoPlus.loads("".join(f.readlines()[1:])).public_key.n
+        return power_args_template.format(
+            old_n=old_n, new_n=self.crypto_plus.public_key.n
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     DBeaverKeyGen().run()

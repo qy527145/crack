@@ -34,7 +34,7 @@ ContactName=asd
 
 def baseN(num, b, numerals="0123456789abcdefghijklmnopqrstuvwxyz"):  # noqa
     return ((num == 0) and numerals[0]) or (
-            baseN(num // b, b, numerals).lstrip(numerals[0]) + numerals[num % b]
+        baseN(num // b, b, numerals).lstrip(numerals[0]) + numerals[num % b]
     )
 
 
@@ -42,7 +42,7 @@ def parse(code):
     code = code.strip().replace("\n", "")
     sig_index = code.rfind("X02")
     assert sig_index != -1, "无效激活码"
-    code_len = int(code[sig_index + 3:], 31)
+    code_len = int(code[sig_index + 3 :], 31)
     code = code[:sig_index]
     code_bytes = base64.b64decode(code)
     assert len(base64.b64encode(code_bytes)) == code_len, "无效激活码"

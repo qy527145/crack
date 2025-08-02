@@ -42,9 +42,7 @@ class GitlabKeyGen(KeyGen):
         if len(license_plaintext) % 16 > 0:
             pad = 16 - len(license_plaintext) % 16
             license_plaintext = license_plaintext + pad.to_bytes(1) * pad
-        encrypt_data = AES.new(aes_key, AES.MODE_CBC, aes_iv).encrypt(
-            license_plaintext
-        )
+        encrypt_data = AES.new(aes_key, AES.MODE_CBC, aes_iv).encrypt(license_plaintext)
         # 原则上不应该使用私钥加密，尽管CryptoPlus支持私钥加密
         encrypt_key = self.crypto_plus.encrypt_by_private_key(aes_key)
         encrypt_license = {
@@ -61,9 +59,7 @@ class GitlabKeyGen(KeyGen):
     def parse(self, licenses):
         encrypt_license = base64.b64decode(licenses)
         encrypt_license = json.loads(encrypt_license.decode())
-        encrypt_data = base64.b64decode(
-            encrypt_license["data"].replace("\n", "")
-        )
+        encrypt_data = base64.b64decode(encrypt_license["data"].replace("\n", ""))
         encrypt_key = base64.b64decode(encrypt_license["key"].replace("\n", ""))
         iv = base64.b64decode(encrypt_license["iv"])
         # 原则上不应该使用公钥解密，尽管CryptoPlus支持公钥解密
