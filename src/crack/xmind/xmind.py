@@ -1,5 +1,6 @@
 import os
 import pathlib
+import platform
 import shutil
 from base64 import b64encode
 
@@ -11,6 +12,7 @@ from crack.base import KeyGen
 
 class XmindKeyGen(KeyGen):
     def __init__(self):
+        super().__init__()
         # Get the module directory for storing keys
         module_dir = pathlib.Path(__file__).parent
         key_path = module_dir / "key.pem"
@@ -23,8 +25,16 @@ class XmindKeyGen(KeyGen):
             rsa.dump(str(key_path), str(module_dir / "new_public_key.pem"))
         self.crypto_plus = rsa
 
-        tmp_path = os.environ.get("TMP", os.path.expanduser("~"))
-        asar_path = pathlib.Path(tmp_path).parent.joinpath(r"Programs\Xmind\resources")
+        # 根据操作系统设置不同的路径
+        system = platform.system()
+        if system == "Darwin":  # macOS
+            asar_path = pathlib.Path("/Applications/Xmind.app/Contents/Resources")
+        elif system == "Windows":
+            tmp_path = os.environ.get("TMP", os.path.expanduser("~"))
+            asar_path = pathlib.Path(tmp_path).parent.joinpath(r"Programs\Xmind\resources")
+        else:
+            raise OSError(f"Unsupported operating system: {system}")
+
         self.asar_file = asar_path.joinpath("app.asar")
         self.asar_file_bak = asar_path.joinpath("app.asar.bak")
         self.crack_asar_dir = asar_path.joinpath("ext")
@@ -48,15 +58,17 @@ class XmindKeyGen(KeyGen):
         return self.crypto_plus.decrypt_by_public_key(b64encode(licenses))
 
     def patch(self):
+        # 清理旧的解压目录（如果存在）
+        if self.crack_asar_dir.exists():
+            shutil.rmtree(self.crack_asar_dir)
         # 解包
         extract_asar(str(self.asar_file), str(self.crack_asar_dir))
         shutil.copytree("crack", self.main_dir, dirs_exist_ok=True)
-        # 注入
+        # 注入 - 在文件开头插入 require
         with open(self.main_dir.joinpath("main.js"), "rb") as f:
-            lines = f.readlines()
-            lines[5] = b'require("./hook")\n'
+            content = f.read()
         with open(self.main_dir.joinpath("main.js"), "wb") as f:
-            f.writelines(lines)
+            f.write(b'require("./hook");\n' + content)
         # 替换密钥
         old_key = f"String.fromCharCode({','.join([str(i) for i in self.old_public_key.encode()])})".encode()
         new_key = f"String.fromCharCode({','.join([str(i) for i in self.crypto_plus.public_key.export_key()])})".encode()
