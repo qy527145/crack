@@ -12,6 +12,7 @@ from crack.base import KeyGen
 class XmindKeyGen(KeyGen):
     def __init__(self):
         # Get the module directory for storing keys
+        super().__init__()
         module_dir = pathlib.Path(__file__).parent
         key_path = module_dir / "key.pem"
         old_key_path = module_dir / "old.pem"
